@@ -1,5 +1,6 @@
 import app from './app.js';
 import dotenv from 'dotenv';
+import express from 'express';
 
 //read environment variables
 dotenv.config();
