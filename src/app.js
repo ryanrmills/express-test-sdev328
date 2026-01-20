@@ -1,5 +1,4 @@
 import express from 'express';
-import defaultRouter from './routers/default.routes.js';
 import campusRouter from './routers/campus.routes.js';
 
 //configure Express.js app
@@ -17,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routers
-app.use("/", defaultRouter);
 app.use("/campuses", campusRouter);
 app.use("/locations", campusRouter);
 
