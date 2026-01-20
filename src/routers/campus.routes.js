@@ -18,19 +18,39 @@ router.get(["/about", "/info"], (req, res) => {
     })
 })
 
+router.get("/search", (req, res) => {
+    const { city, open, program } = req.query;
+    console.log(req.query);
+    let result;
+    if (!city && !open && !program){
+        res.status(200).json(campuses);
+    } else {
+        result = campuses.filter(campus => {
+            return campus.city === city || campus.programs.includes(program);
+        })
+        res.status(200).json(result);
+    }
+})
+
 router.get("/:id", (req, res) => {
     const {id} = req.params;
-    let chosenCampus;
-    for (let campus of campuses){
-        if (campus.id == id){
-            chosenCampus = campus;
+    console.log(req.params);
+    let chosenCampus = null;
+    
+    if (id.length > 0){
+        for (let campus of campuses){
+            if (parseInt(campus.id) === parseInt(id)){
+                chosenCampus = campus;
+            }
         }
     }
 
-    chosenCampus = chosenCampus != null ? chosenCampus : {error: "Campus not found."};
-    res.status(200).json(chosenCampus);
+    if (chosenCampus === null){
+        res.status(200).json({error: "Campus not found."});
+    } else {
+        res.status(200).json(chosenCampus);
+    }
 })
-
 
 
 export default router;
